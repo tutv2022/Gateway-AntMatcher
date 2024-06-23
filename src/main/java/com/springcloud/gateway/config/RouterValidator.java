@@ -16,6 +16,7 @@ public class RouterValidator {
 //            "/ticket/**",
 //            "/reservation/**"
             "/**/list",
+            "/api/**/headers",
             "/**/headers"
     );
 

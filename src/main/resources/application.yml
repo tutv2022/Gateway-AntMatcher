@@ -12,7 +12,7 @@ spring:
         - id: ticket-service
           uri: "http://localhost:7071/"
           predicates:
-            - Path=/ticket/* , /v3/api-docs/ticket
+            - Path=/ticket/** , /v3/api-docs/ticket
           filters:
             - name: CircuitBreaker
               args:
@@ -21,13 +21,15 @@ spring:
         - id: reservation-service
           uri: "http://localhost:7061/"
           predicates:
-            - Path=/reservation/* , /v3/api-docs/reservation
-
+            - Path=/reservation/** , /v3/api-docs/reservation
           filters:
-            - name: CircuitBreaker
-              args:
-                name: reservationBreaker
-                fallbackUri: forward:/fb/reservation/
+            - RewritePath=/reservation/(?<segment>.*), /${segment}
+
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: reservationBreaker
+#                fallbackUri: forward:/fb/reservation/
     discovery:
       enabled: true
 
